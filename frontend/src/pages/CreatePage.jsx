@@ -3,6 +3,8 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate} from "react-router";
 
+const URL = import.meta.env.MODE === "development" ? "http://localhost:9669/api/notes" : "/api/notes";
+
 const CreatePage = ({ notes, setNotes }) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -21,7 +23,7 @@ const CreatePage = ({ notes, setNotes }) => {
         setLoading(true);
 
         try {
-            await axios.post("http://localhost:9669/api/notes", {
+            await axios.post(URL, {
                 title,
                 content,
             })

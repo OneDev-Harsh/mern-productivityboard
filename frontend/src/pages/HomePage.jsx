@@ -4,6 +4,8 @@ import axios from "axios"
 import toast from "react-hot-toast";
 import { Link } from "react-router";
 
+const URL = import.meta.env.MODE === "development" ? "http://localhost:9669/api/notes" : "/api/notes";
+
 const HomePage = () => {
 
     const [notes, setNotes] = useState([]);
@@ -12,7 +14,7 @@ const HomePage = () => {
     useEffect(() => {
         const fetchNotes = async () => {
             try {
-                const res = await axios.get("http://localhost:9669/api/notes")
+                const res = await axios.get(URL)
                 if (res) {
                     toast.success("Notes loaded successfully.")
                 }

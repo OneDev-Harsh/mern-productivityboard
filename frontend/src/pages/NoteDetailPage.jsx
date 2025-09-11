@@ -3,6 +3,8 @@ import { useNavigate, useParams } from "react-router";
 import axios from "axios";
 import toast from "react-hot-toast";
 
+const URL = import.meta.env.MODE === "development" ? "http://localhost:9669/api/notes" : "/api/notes";
+
 const NoteDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -18,7 +20,7 @@ const NoteDetailPage = () => {
   useEffect(() => {
     const fetchNote = async () => {
       try {
-        const res = await axios.get(`http://localhost:9669/api/notes/${id}`);
+        const res = await axios.get(`${URL}/${id}`);
         setNote(res.data);
         setTitle(res.data.title);
         setContent(res.data.content);
@@ -37,7 +39,7 @@ const NoteDetailPage = () => {
     if (!confirm("Are you sure you want to delete this note?")) return;
 
     try {
-      const res = await axios.delete(`http://localhost:9669/api/notes/${id}`);
+      const res = await axios.delete(`${URL}/${id}`);
       if (res.status === 200 || res.status === 204) {
         toast.success("Note deleted ✅");
         navigate("/");
@@ -62,7 +64,7 @@ const NoteDetailPage = () => {
     }
 
     try {
-      const res = await axios.put(`http://localhost:9669/api/notes/${id}`, {
+      const res = await axios.put(`${URL}/${id}`, {
         title,
         content,
       });
